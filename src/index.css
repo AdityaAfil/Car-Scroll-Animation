@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --color-band: #35f27a;
+}
+
+/* Theme colours read the CSS variables below, so a single class on <html>
+   (or a local override such as [--ink:#000]) switches them everywhere. */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-asphalt: var(--asphalt);
+}
+
+:root {
+  --paper: #d6d6d6;
+  --ink: #000000;
+  --asphalt: #131313;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #0e0f12;
+  --ink: #f3f3f1;
+  --asphalt: #26282e; /* the road strip must stay lighter than the page */
+  color-scheme: dark;
+}
+
+:root {
+  /* Height of the green band and width of the car. Everything else
+     (title size, card positions, car position) is derived from these. */
+  --band-h: clamp(120px, 21svh, 210px);
+  --car-w: clamp(250px, 31vw, 640px);
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  background: var(--paper);
+  color: var(--ink);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Hero title: sized from both width and height so it always fits the band */
+.hero-title {
+  font-size: clamp(2.1rem, min(8.6vw, 14.5svh), 10rem);
+}
+
+/* Scroll hint: fades in after the intro, line loops */
+@keyframes scroll-line {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(200%); }
+}
+@keyframes hint-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.scroll-line {
+  animation: scroll-line 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.hint-in {
+  animation: hint-in 0.8s 2.2s both;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-line { animation: none; }
+  .hint-in { animation-delay: 0s; }
+}
