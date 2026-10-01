@@ -239,7 +239,7 @@ function Hero() {
             <div className="absolute -bottom-1 left-[6%] h-[7%] w-[88%] rounded-[50%] bg-black/45 blur-xl" />
             <img
               ref={carImgRef}
-              src="/car.webp"
+              src={`${import.meta.env.BASE_URL}car.webp`}
               alt="Orange sports car driving across the page"
               draggable="false"
               className="relative block w-full select-none"
